@@ -1,0 +1,5 @@
+PS C:\Users\User> docker ps -a
+CONTAINER ID   IMAGE     COMMAND                  CREATED          STATUS                     PORTS     NAMES
+94c1e07c8ac7   redis     "docker-entrypoint.s…"   26 seconds ago   Exited (0) 8 seconds ago             vigilant_wozniak
+11a3ca0c37c4   mongo     "docker-entrypoint.s…"   50 seconds ago   Exited (0) 3 seconds ago             nervous_nobel
+e8baa6626963   nginx     "/docker-entrypoint.…"   9 minutes ago    Up 9 minutes               80/tcp    fervent_fermat
