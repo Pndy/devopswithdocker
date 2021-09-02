@@ -1,0 +1,8 @@
+https://hub.docker.com/r/devopsdockeruh/pull_exercise
+has the key in description, or otherwise bottom right "source repository"
+https://github.com/docker-hy/docs-exercise
+has the code to get the key
+
+Give me the password: basics
+You found the correct password. Secret message is:
+"This is the secret message"
