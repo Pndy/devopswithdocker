@@ -1,0 +1,4 @@
+user@DESKTOP-NHNVB13:/mnt/c/Users/User$ docker run -it --rm ubuntu sh -c 'apt update; apt install curl -y; echo "Input website:"; read website; echo "Searching.."; sleep 1; curl http://$website;
+
+whole command is there that first updates packages and installs curl, then it works as normal
+had problems with escaping the " ' issue in windows, but as i tested it from wsl it was correct
