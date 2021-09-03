@@ -1,0 +1,10 @@
+this took way too long, due to wsl2/docker or some bug that
+prevented the actual answer from working. 
+had to finish this in pure linux environment to get it working
+
+Commands:
+
+touch text.log
+docker run -d -v "$(pwd)/text.log:/usr/src/app/text.log" devopsdockeruh/simple-web-service:alpine
+
+tail text.log
