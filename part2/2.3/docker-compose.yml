@@ -1,0 +1,11 @@
+version: '3.5'
+
+services:
+  backend:
+    image: hellobackend:1.14
+    ports:
+      - 3000:8080
+  frontend:
+    image: hellofrontend:1.14
+    ports:
+      - 5000:5000
