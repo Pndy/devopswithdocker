@@ -1,0 +1,20 @@
+version: '3.5'
+
+services:
+  backend:
+    image: hellobackend:1.14
+    ports:
+      - 3000:8080
+    environment:
+      - REDIS_HOST=redis_cont
+    depends_on:
+      - "redis"
+  redis:
+    image: redis
+    container_name: redis_cont
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+  frontend:
+    image: hellofrontend:1.14
+    ports:
+      - 5000:5000
