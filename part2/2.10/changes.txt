@@ -1,0 +1,14 @@
+as the environment vars were declared in the Dockerfiles,
+i wasnt able to override then and set the REACT_APP_BACKEND_URL var
+from docker-compose.yml
+
+so i removed the env vars from both dockerfiles, built new images
+and had the env var in docker-compose, pointing to the right place
+
+
+i also finished this exercise at 2.9 as i made the necessary changes
+while fixing that, but had typo on "hellofrontend:2.8" imagename,
+so i have fixed and cleaned up them a little.
+
+
+All buttons work after the changes
