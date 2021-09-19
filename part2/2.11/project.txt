@@ -1,0 +1,9 @@
+when setting up a developement environment, 
+having the same environment for all is important
+so being able to start a bigger project that needs
+multiple databases and services with one command is great.
+
+i had a docker-compose start postgres and mongodb
+that were needed for the application,
+with volumes on both so data didnt reset everytime.
+
