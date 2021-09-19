@@ -34,3 +34,27 @@ https://devopswithdocker.com
 [1.15 Homework](https://github.com/Pndy/devopswithdocker/blob/main/part1/homework.txt)
 
 [1.16 Heroku](https://github.com/Pndy/devopswithdocker/blob/main/part1/heroku.txt)
+
+## Part 2
+
+[2.1](https://github.com/Pndy/devopswithdocker/tree/main/part2/2.1)
+
+[2.2](https://github.com/Pndy/devopswithdocker/tree/main/part2/2.2)
+
+[2.3](https://github.com/Pndy/devopswithdocker/tree/main/part2/2.3)
+
+[2.4](https://github.com/Pndy/devopswithdocker/tree/main/part2/2.4)
+
+[2.5](https://github.com/Pndy/devopswithdocker/tree/main/part2/2.5)
+
+[2.6](https://github.com/Pndy/devopswithdocker/tree/main/part2/2.6)
+
+[2.7](https://github.com/Pndy/devopswithdocker/tree/main/part2/2.7)
+
+[2.8](https://github.com/Pndy/devopswithdocker/tree/main/part2/2.8)
+
+[2.9](https://github.com/Pndy/devopswithdocker/tree/main/part2/2.9)
+
+[2.10](https://github.com/Pndy/devopswithdocker/tree/main/part2/2.10)
+
+[2.11](https://github.com/Pndy/devopswithdocker/tree/main/part2/2.11)
