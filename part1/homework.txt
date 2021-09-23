@@ -1,4 +1,0 @@
-
-dockerhub link:
-
-https://hub.docker.com/r/pndy/homework

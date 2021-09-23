@@ -1,9 +1,0 @@
-devopsdockeruh/simple-web-service   ubuntu    4e3362e907d5   5 months ago   83MB
-devopsdockeruh/simple-web-service   alpine    fd312adc88e0   5 months ago   15.7MB
-
-ubuntu takes 83MB whereas alpine 15.7MB
-
-user@DESKTOP-NHNVB13:~$ docker exec 4f sh -c 'cat text.log' (4f being start of alpine container id)
-
-from alpine container:
-Secret message is: 'You can find the source code here: https://github.com/docker-hy'
