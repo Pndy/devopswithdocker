@@ -15,3 +15,13 @@ jobs:
       env: 
         HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
       run: heroku container:login
+
+    - name: Build container and push to heroku
+      env:
+        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+      run: heroku container:push -a ghci-petri web 
+
+    - name: Release the application
+      env:
+        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+      run: heroku container:release -a ghci-petri web 
