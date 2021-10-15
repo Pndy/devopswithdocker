@@ -1,0 +1,46 @@
+Results:
+hellofrontend  3.4  026a2ee61ea2   4 minutes ago       391MB
+hellobackend   3.4  801c8187bc41   5 minutes ago       81.6MB
+hellofrontend  3.3  719d81044343   2 hours ago         1.17GB
+hellobackend   3.3  32f6f6cdfcb2   2 hours ago         1.07GB
+
+Frontend Dockerfile
+FROM node:lts AS build-env
+WORKDIR /app
+ENV REACT_APP_BACKEND_URL=http://localhost:3000
+COPY . .
+RUN npm install \
+ && npm run build
+
+FROM ubuntu:18.04
+WORKDIR /usr/src/app
+COPY --from=build-env /app/build /usr/src/app/build
+RUN apt update \
+ && apt install nodejs npm -y \
+ && npm install -g serve \
+ && rm -rf /var/lib/apt/lists/* \
+ && useradd -m frontenduser
+
+USER frontenduser
+EXPOSE 5000
+CMD ["serve", "-s", "-l", "5000", "./build"]
+
+
+Backend Dockerfile
+FROM golang:1.16 AS build-env
+WORKDIR /usr/src/app
+COPY . .
+RUN go build
+
+FROM ubuntu:18.04
+WORKDIR /usr/src/app
+COPY --from=build-env /usr/src/app/server /usr/src/app
+RUN useradd -m backenduser
+ENV REQUEST_ORIGIN=http://localhost:5000
+
+USER backenduser
+EXPOSE 8080
+ENTRYPOINT ["/usr/src/app/server"]
+
+
+(This was tested so that 1.14 completes on frontend)
