@@ -63,10 +63,17 @@ https://devopswithdocker.com
 ## Part 3
 
 [3.1](https://github.com/Pndy/devopswithdocker/tree/main/part3/3.1.txt)
+
 [3.2 WIP](https://github.com/Pndy/devopswithdocker/tree/main/part3/)
+
 [3.3](https://github.com/Pndy/devopswithdocker/tree/main/part3/3.3.txt)
+
 [3.4](https://github.com/Pndy/devopswithdocker/tree/main/part3/3.4.txt)
+
 [3.5](https://github.com/Pndy/devopswithdocker/tree/main/part3/3.5.txt)
+
 [3.6](https://github.com/Pndy/devopswithdocker/tree/main/part3/3.6.txt)
+
 [3.7](https://github.com/Pndy/devopswithdocker/tree/main/part3/3.7.txt)
+
 [3.8](https://github.com/Pndy/devopswithdocker/tree/main/part3/kubernetes-gameserver.png)
