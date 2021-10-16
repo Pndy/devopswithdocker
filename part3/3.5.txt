@@ -1,0 +1,52 @@
+Results:
+hellobackend   3.5  d6c89ebd5f94   About a minute ago   23.6MB
+hellofrontend  3.5  41d7087e1ac5   11 minutes ago       70.1MB
+hellobackend   3.4  e28f526993c1   10 hours ago         81.6MB
+hellofrontend  3.4  d0e8a47cb7a7   10 hours ago         391MB
+hellofrontend  3.3  719d81044343   12 hours ago         1.17GB
+hellobackend   3.3  32f6f6cdfcb2   13 hours ago         1.07GB
+
+3.3 tagged are original
+3.4 are slimmed/multistage built
+3.5 are alpine
+
+
+Frontend Dockerfile:
+FROM node:lts AS build-env
+WORKDIR /app
+ENV REACT_APP_BACKEND_URL=http://localhost:3000
+COPY . .
+RUN npm install \
+ && npm run build
+
+FROM alpine:3.13
+WORKDIR /usr/src/app
+COPY --from=build-env /app/build /usr/src/app/build
+RUN apk add --no-cache nodejs npm \
+ && npm install -g serve \
+ && adduser -D frontenduser
+
+USER frontenduser
+EXPOSE 5000
+CMD ["serve", "-s", "-l", "5000", "./build"]
+
+-----------------------------------------------
+Backend Dockerfile:
+FROM golang:1.16 AS build-env
+WORKDIR /usr/src/app
+COPY . .
+RUN CGO_ENABLED=0 go build
+
+FROM alpine:3.13
+WORKDIR /usr/src/app
+COPY --from=build-env /usr/src/app/server /usr/src/app
+RUN adduser -D backenduser
+ENV REQUEST_ORIGIN=http://localhost:5000
+
+USER backenduser
+EXPOSE 8080
+ENTRYPOINT ["/usr/src/app/server"]
+
+------------------------------------------------
+
+tested that they work together with 1.14 test on frontend
