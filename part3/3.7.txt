@@ -1,0 +1,72 @@
+TLDR:
+scalingcalc  newest    11MB
+scalingcalc  new       164MB
+scalingcalc  old       1.05GB
+
+Process of improvement:
+
+I took the original scaling exercises (task 2.5) calculator
+part, which i immediately converted to alpine
+base and added new user which will run the program for security.
+With those the image size went from 1.05GB to much better 164MB.
+
+Next up i took a better look at what the application actually does when ran,
+and discovered that its similar to the other frontend project in that
+to run it its just being served the built folder (using serve),
+so i was able to take what i learned earlier and implemented
+multi-stage build process and copying over the built files
+to lighttpd server, i was able to remove the dependecies to node/npm
+and go fom 164MB to 11MB
+
+
+Original dockerfile:
+FROM node:14
+
+WORKDIR /usr/app
+
+COPY . .
+RUN npm ci && npm run build
+
+EXPOSE 3000
+
+CMD ["npm", "start"]
+
+-----------------------------------
+Mid level Dockerfile:
+FROM alpine:3.13
+
+WORKDIR /usr/app
+
+COPY . .
+RUN apk add --no-cache nodejs npm \ 
+ && npm ci && npm run build \
+ && adduser -D calcuser
+
+EXPOSE 3000
+USER calcuser
+CMD ["npm", "start"]
+
+-----------------------------------
+Finished Dockerfile:
+FROM node:14 AS build-env
+
+WORKDIR /usr/app
+COPY . .
+RUN npm ci && npm run build
+
+
+FROM alpine:3.13
+
+WORKDIR /usr/app
+RUN apk add --no-cache lighttpd \
+ && adduser -D calcuser \
+ && chown -R calcuser:calcuser /etc/lighttpd/lighttpd.conf \
+ && chown -R calcuser:calcuser /var/log/lighttpd \
+ && touch /var/run/lighttpd.pid \
+ && chown -R calcuser:calcuser /var/run/lighttpd.pid
+
+EXPOSE 80
+USER calcuser
+COPY --from=build-env /usr/app/dist /var/www/localhost/htdocs
+
+CMD ["lighttpd", "-D", "-f", "/etc/lighttpd/lighttpd.conf"]
