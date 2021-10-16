@@ -1,0 +1,54 @@
+Results:
+hellofrontend  3.6  9.56MB
+hellobackend   3.5  23.6MB
+hellofrontend  3.5  70.1MB
+
+while i had already made both images using multi-stage builds,
+i managed to optimise the frontend even better by
+switching to lighttpd instead of downloading node/npm
+and using serve from npm
+
+
+Frontend Dockerfile:
+FROM node:lts AS build-env
+WORKDIR /app
+ENV REACT_APP_BACKEND_URL=http://localhost:3000
+COPY . .
+RUN npm install \
+ && npm run build
+
+FROM alpine:3.13
+RUN apk add --no-cache lighttpd \
+ && adduser -D feuser \
+ && chown -R feuser:feuser /etc/lighttpd/lighttpd.conf \
+ && chown -R feuser:feuser /var/log/lighttpd \
+ && touch /var/run/lighttpd.pid \
+ && chown -R feuser:feuser /var/run/lighttpd.pid
+
+USER feuser
+COPY --from=build-env /app/build /var/www/localhost/htdocs
+
+EXPOSE 80
+CMD ["lighttpd", "-D", "-f", "/etc/lighttpd/lighttpd.conf"]
+
+
+-----------------------------------------------
+Backend Dockerfile (not changed from 3.5):
+FROM golang:1.16 AS build-env
+WORKDIR /usr/src/app
+COPY . .
+RUN CGO_ENABLED=0 go build
+
+FROM alpine:3.13
+WORKDIR /usr/src/app
+COPY --from=build-env /usr/src/app/server /usr/src/app
+RUN adduser -D backenduser
+ENV REQUEST_ORIGIN=http://localhost:5000
+
+USER backenduser
+EXPOSE 8080
+ENTRYPOINT ["/usr/src/app/server"]
+
+------------------------------------------------
+
+tested that they work together with 1.14 test on frontend
